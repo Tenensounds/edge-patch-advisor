@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Behringer EDGE Patch Advisor</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Semi-modular Patch Inspiration</p>
+        <h1>Behringer EDGE Patch Advisor</h1>
+        <p class="hero-copy">
+          Wähle einen Sound-Typ und lass dir einen spielbaren Startpunkt mit
+          Reglerwerten, Sequencer-Pattern und Patch-Kabeln erzeugen.
+        </p>
+      </header>
+
+      <section class="control-bar" aria-label="Patch Auswahl">
+        <label class="field">
+          <span>Patch-Typ</span>
+          <select id="categorySelect" aria-label="Patch-Typ auswählen"></select>
+        </label>
+        <button id="generateBtn" type="button">Neuen Vorschlag erzeugen</button>
+      </section>
+
+      <p class="startpoint-note">
+        Alle Werte sind Startpunkte. Bitte nach Gehör und Pegelkontext fein
+        anpassen.
+      </p>
+
+      <section class="layout">
+        <section class="panel-card" aria-labelledby="edgePanelTitle">
+          <div class="card-head">
+            <h2 id="edgePanelTitle">EDGE-Skizze</h2>
+            <p>Minimalistische Oberfläche mit Live-Werten und Patch-Kabeln.</p>
+          </div>
+
+          <div class="edge-panel" id="edgePanel">
+            <svg
+              class="cable-layer"
+              id="cableLayer"
+              aria-hidden="true"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            ></svg>
+
+            <div class="panel-grid">
+              <section class="panel-section" aria-labelledby="oscTitle">
+                <div class="section-heading">
+                  <h3 id="oscTitle">Oscillator</h3>
+                  <p>Zwei Oszillatoren und FM.</p>
+                </div>
+                <div class="knob-grid">
+                  <div class="knob" data-control="OSC 1 Tune">
+                    <span class="knob-label">OSC 1 Tune</span>
+                    <span class="knob-value">12 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="OSC 2 Tune">
+                    <span class="knob-label">OSC 2 Tune</span>
+                    <span class="knob-value">12 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="FM Amount">
+                    <span class="knob-label">FM Amount</span>
+                    <span class="knob-value">Aus</span>
+                  </div>
+                  <div class="knob" data-control="Pitch Mod">
+                    <span class="knob-label">Pitch Mod</span>
+                    <span class="knob-value">10 Uhr</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section" aria-labelledby="mixTitle">
+                <div class="section-heading">
+                  <h3 id="mixTitle">Mixer / Noise</h3>
+                  <p>Mischung, Drive und Noise-Anteil.</p>
+                </div>
+                <div class="knob-grid">
+                  <div class="knob" data-control="OSC Mix">
+                    <span class="knob-label">OSC Mix</span>
+                    <span class="knob-value">Mitte</span>
+                  </div>
+                  <div class="knob" data-control="Noise Level">
+                    <span class="knob-label">Noise Level</span>
+                    <span class="knob-value">Aus</span>
+                  </div>
+                  <div class="knob" data-control="Mixer Drive">
+                    <span class="knob-label">Mixer Drive</span>
+                    <span class="knob-value">11 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="Accent Amount">
+                    <span class="knob-label">Accent</span>
+                    <span class="knob-value">12 Uhr</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section" aria-labelledby="filterTitle">
+                <div class="section-heading">
+                  <h3 id="filterTitle">Filter</h3>
+                  <p>VCF-Grundcharakter und Modulation.</p>
+                </div>
+                <div class="knob-grid">
+                  <div class="knob" data-control="VCF Cutoff">
+                    <span class="knob-label">VCF Cutoff</span>
+                    <span class="knob-value">12 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="Resonance">
+                    <span class="knob-label">Resonance</span>
+                    <span class="knob-value">9 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="VCF Mod">
+                    <span class="knob-label">VCF Mod</span>
+                    <span class="knob-value">10 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="Filter Env Amt">
+                    <span class="knob-label">Env Amount</span>
+                    <span class="knob-value">11 Uhr</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section" aria-labelledby="envTitle">
+                <div class="section-heading">
+                  <h3 id="envTitle">Envelopes / Decay</h3>
+                  <p>Kurven für Punch, Snap und Sustain.</p>
+                </div>
+                <div class="knob-grid">
+                  <div class="knob" data-control="VCA Decay">
+                    <span class="knob-label">VCA Decay</span>
+                    <span class="knob-value">11 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="VCF Decay">
+                    <span class="knob-label">VCF Decay</span>
+                    <span class="knob-value">11 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="Snappy">
+                    <span class="knob-label">Snappy</span>
+                    <span class="knob-value">10 Uhr</span>
+                  </div>
+                  <div class="knob" data-control="Tempo">
+                    <span class="knob-label">Tempo</span>
+                    <span class="knob-value">120 BPM</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-section sequencer-section" aria-labelledby="seqTitle">
+                <div class="section-heading">
+                  <h3 id="seqTitle">Sequencer</h3>
+                  <p>8 Steps für Pitch und Velocity.</p>
+                </div>
+                <div class="sequence-grid" id="sequenceGrid"></div>
+              </section>
+
+              <section class="panel-section patchbay-section" aria-labelledby="patchbayTitle">
+                <div class="section-heading">
+                  <h3 id="patchbayTitle">Patchbay</h3>
+                  <p>Ein- und Ausgänge für semi-modulare Routings.</p>
+                </div>
+                <div class="patchbay-grid">
+                  <button class="jack" type="button" data-jack="VEL OUT">VEL OUT</button>
+                  <button class="jack" type="button" data-jack="PITCH OUT">PITCH OUT</button>
+                  <button class="jack" type="button" data-jack="GATE OUT">GATE OUT</button>
+                  <button class="jack" type="button" data-jack="CLOCK OUT">CLOCK OUT</button>
+                  <button class="jack" type="button" data-jack="VCO 1 OUT">VCO 1 OUT</button>
+                  <button class="jack" type="button" data-jack="VCO 2 OUT">VCO 2 OUT</button>
+                  <button class="jack" type="button" data-jack="NOISE OUT">NOISE OUT</button>
+                  <button class="jack" type="button" data-jack="VCF OUT">VCF OUT</button>
+                  <button class="jack" type="button" data-jack="TRIGGER IN">TRIGGER IN</button>
+                  <button class="jack" type="button" data-jack="CLOCK IN">CLOCK IN</button>
+                  <button class="jack" type="button" data-jack="OSC 1 CV">OSC 1 CV</button>
+                  <button class="jack" type="button" data-jack="OSC 2 FM">OSC 2 FM</button>
+                  <button class="jack" type="button" data-jack="VCF MOD">VCF MOD</button>
+                  <button class="jack" type="button" data-jack="VCA CV">VCA CV</button>
+                  <button class="jack" type="button" data-jack="ACCENT IN">ACCENT IN</button>
+                  <button class="jack" type="button" data-jack="EXT AUDIO IN">EXT AUDIO IN</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="details-card" aria-labelledby="detailsTitle">
+          <div class="card-head">
+            <h2 id="detailsTitle">Patch-Vorschlag</h2>
+            <p>Konkrete Parameter plus Hinweise für Performance und Variation.</p>
+          </div>
+
+          <article class="patch-result" id="patchResult">
+            <div class="patch-overview">
+              <p class="category-badge" id="patchCategory">Kick Drum</p>
+              <h3 id="patchName">Wähle einen Typ und erzeuge einen Vorschlag</h3>
+              <p id="patchDescription">
+                Die App zeigt dir danach einen direkten Startpunkt für den EDGE.
+              </p>
+            </div>
+
+            <div class="result-grid">
+              <section>
+                <h4>Parameter</h4>
+                <ul id="parameterList" class="info-list"></ul>
+              </section>
+
+              <section>
+                <h4>Patch-Kabel</h4>
+                <ul id="cableList" class="info-list"></ul>
+              </section>
+
+              <section>
+                <h4>Sequencer Pitch</h4>
+                <ol id="pitchList" class="step-list"></ol>
+              </section>
+
+              <section>
+                <h4>Sequencer Velocity</h4>
+                <ol id="velocityList" class="step-list"></ol>
+              </section>
+
+              <section class="tips-section">
+                <h4>Performance-Tipps</h4>
+                <ul id="tipsList" class="info-list"></ul>
+              </section>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
