@@ -1106,12 +1106,20 @@ function varyVelocity(value) {
 function getKnobAngle(value) {
   const match = /^(\d{1,2}) Uhr$/.exec(value);
   if (!match) {
-    return -90;
+    if (value === "Mitte") {
+      return 0;
+    }
+
+    if (value === "Aus") {
+      return 240;
+    }
+
+    return 0;
   }
 
-  const hour = Number.parseInt(match[1], 10) % 12;
-  const normalizedHour = hour === 0 ? 12 : hour;
-  return normalizedHour * 30 - 90;
+  const rawHour = Number.parseInt(match[1], 10);
+  const normalizedHour = rawHour % 12;
+  return normalizedHour * 30;
 }
 
 function createPatchVariant(basePatch) {
