@@ -28,14 +28,14 @@ const patchLibrary = [
       "Tiefe, runde Kick mit kurzem Filter-Punch und kontrolliertem Sub-Ende.",
     parameters: [
       { control: "OSC 1 Tune", value: "8 Uhr", note: "tiefer Grundton" },
-      { control: "OSC 2 Tune", value: "9 Uhr", note: "leicht darueber fuer Koerper" },
+      { control: "OSC 2 Tune", value: "9 Uhr", note: "leicht darüber für Körper" },
       { control: "FM Amount", value: "9 Uhr", note: "nur ein Hauch Click" },
       { control: "OSC Mix", value: "13 Uhr", note: "mehr OSC 1" },
       { control: "Noise Level", value: "Aus", note: "sauberer Attack" },
-      { control: "Mixer Drive", value: "11 Uhr", note: "leichte Saettigung" },
+      { control: "Mixer Drive", value: "11 Uhr", note: "leichte Sättigung" },
       { control: "VCF Cutoff", value: "9 Uhr", note: "dumpfer Punch" },
       { control: "Resonance", value: "10 Uhr", note: "keine Pfeifresonanz" },
-      { control: "VCF Mod", value: "11 Uhr", note: "Envelope drueckt Transient" },
+      { control: "VCF Mod", value: "11 Uhr", note: "Envelope drückt Transient" },
       { control: "Filter Env Amt", value: "12 Uhr", note: "klarer Anriss" },
       { control: "VCA Decay", value: "10 Uhr", note: "kurz und straff" },
       { control: "VCF Decay", value: "9 Uhr", note: "kurzer Schlag" },
@@ -74,7 +74,7 @@ const patchLibrary = [
       { control: "Resonance", value: "9 Uhr", note: "stabil und direkt" },
       { control: "VCA Decay", value: "9 Uhr", note: "sehr kurz" },
       { control: "VCF Decay", value: "10 Uhr", note: "knackiger Snap" },
-      { control: "Snappy", value: "11 Uhr", note: "zusaetzliche Attack-Kante" },
+      { control: "Snappy", value: "11 Uhr", note: "zusatzliche Attack-Kante" },
       { control: "Tempo", value: "132 BPM", note: "harter Groove" },
     ],
     sequencer: {
@@ -576,6 +576,10 @@ const knobValueNodes = new Map(
   ]),
 );
 
+const knobNodes = new Map(
+  [...document.querySelectorAll(".knob")].map((knob) => [knob.dataset.control, knob]),
+);
+
 function buildCategoryMenu() {
   const categories = [...new Set(patchLibrary.map((patch) => patch.category))];
   const options = [RANDOM_CATEGORY, ...categories];
@@ -657,6 +661,17 @@ function varyVelocity(value) {
   const offset = Math.random() < 0.5 ? -1 : 1;
   const nextIndex = Math.min(levels.length - 1, Math.max(0, index + offset));
   return levels[nextIndex];
+}
+
+function getKnobAngle(value) {
+  const match = /^(\d{1,2}) Uhr$/.exec(value);
+  if (!match) {
+    return -90;
+  }
+
+  const hour = Number.parseInt(match[1], 10) % 12;
+  const normalizedHour = hour === 0 ? 12 : hour;
+  return normalizedHour * 30 - 90;
 }
 
 function createPatchVariant(basePatch) {
@@ -748,6 +763,10 @@ function updatePanelValues(patch) {
 
   knobValueNodes.forEach((node, control) => {
     node.textContent = values[control];
+  });
+
+  knobNodes.forEach((knob, control) => {
+    knob.style.setProperty("--knob-angle", `${getKnobAngle(values[control])}deg`);
   });
 }
 
