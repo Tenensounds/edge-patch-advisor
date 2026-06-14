@@ -22,7 +22,20 @@
           <span>Patch-Typ</span>
           <select id="categorySelect" aria-label="Patch-Typ auswählen"></select>
         </label>
-        <button id="generateBtn" type="button">Neuen Vorschlag erzeugen</button>
+        <div class="button-cluster">
+          <button id="generateBtn" type="button">Neuen Vorschlag erzeugen</button>
+          <button id="favoriteBtn" class="secondary-btn" type="button">
+            Zu Favoriten speichern
+          </button>
+        </div>
+        <div class="button-cluster export-cluster">
+          <button id="exportTxtBtn" class="ghost-btn" type="button">
+            Als Text exportieren
+          </button>
+          <button id="exportPdfBtn" class="ghost-btn" type="button">
+            Als PDF exportieren
+          </button>
+        </div>
       </section>
 
       <p class="startpoint-note">
@@ -198,6 +211,10 @@
               </p>
             </div>
 
+            <p class="favorite-status" id="favoriteStatus">
+              Dieser Vorschlag ist noch nicht als Favorit gespeichert.
+            </p>
+
             <div class="result-grid">
               <section>
                 <h4>Parameter</h4>
@@ -224,6 +241,14 @@
                 <ul id="tipsList" class="info-list"></ul>
               </section>
             </div>
+
+            <section class="favorites-panel" aria-labelledby="favoritesTitle">
+              <div class="favorites-head">
+                <h4 id="favoritesTitle">Favoriten</h4>
+                <p>Gespeicherte Vorschläge bleiben lokal in diesem Browser erhalten.</p>
+              </div>
+              <ul id="favoritesList" class="favorite-list"></ul>
+            </section>
           </article>
         </section>
       </section>
